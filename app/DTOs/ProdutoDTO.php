@@ -7,9 +7,9 @@ class ProdutoDTO{
     public string $descricao;
     public float $preco;
     public int $qtde_estoque;
-    public boolean $status;
+    public bool $status;
 
-    public function __construct(string $nome, string $descricao, float $preco, int $qtde_estoque, boolean $status){
+    public function __construct(string $nome, string $descricao, float $preco, int $qtde_estoque, bool $status){
         $this->nome = $nome;
         $this->descricao = $descricao;
         $this->preco = $preco;
