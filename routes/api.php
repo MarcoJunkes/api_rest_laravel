@@ -18,10 +18,14 @@ use App\Http\Controllers\Api\AuthController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/login', function () {
+    return response()->json(['message' => 'Token indefinido'], 401);
+})->name('login');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('produtos', ProdutoController::class)->except([
+Route::middleware('auth:sanctum')->apiResource('produtos', ProdutoController::class)->except([
     'create', 'show', 'edit'
 ]);
