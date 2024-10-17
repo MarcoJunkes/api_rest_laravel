@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text("descricao")->nullable();
             $table->decimal("preco");
             $table->integer("qtde_estoque");
-            $table->boolean("status");
+            $table->boolean("status"); // false para não disponível e true para disponível
             $table->timestamps();
         });
     }

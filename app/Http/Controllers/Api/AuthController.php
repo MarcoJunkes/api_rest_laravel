@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         $user = User::where('name', $request->name)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) { // Compara a senha 'criptografada' no BD
             return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
 

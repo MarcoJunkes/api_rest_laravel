@@ -64,7 +64,7 @@ class ProdutoController extends Controller
     public function update(ProdutoRequest $request, $id)
     {
         try {
-            $produto = Produto::findOrFail($id);
+            $produto = Produto::findOrFail($id); // Procuro pelo Id do produto, se não encontrar, cai na excessão da linha 80
 
             $produtoDTO = new ProdutoDTO(
                 $request->validated()['nome'],

@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('112233'),
+            'password' => Hash::make('112233'), //Senha 'criptografada' no bd
         ]);
     }
 }
