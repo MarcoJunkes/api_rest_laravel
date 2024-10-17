@@ -86,4 +86,14 @@ Esta é uma API REST desenvolvida com Laravel para gerenciar produtos. O projeto
 8. **tests**
     - Contém `ProdutoTest` que realiza uma simulação  de inserção no bd.
     - Para executar: `php artisan test`
-        
+
+## Coleção do Postman
+
+A coleção do Postman para esta API está disponível na pasta `postman-collections`. Você pode importar a coleção no Postman para testar os endpoints da API.
+
+### Importando a Coleção
+
+1. Abra o Postman.
+2. Clique em **Import**.
+3. Selecione a aba **File** e arraste o arquivo `postman-collection.json` para a janela ou clique em **Choose Files** e selecione o arquivo.
+4. A coleção será importada e estará disponível para uso.
