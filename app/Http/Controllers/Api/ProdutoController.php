@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProdutoRequest;
 use App\Http\Resources\ProdutoResource;
 use App\DTOs\ProdutoDTO;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProdutoController extends Controller
 {
@@ -60,9 +61,11 @@ class ProdutoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProdutoRequest $request, Produto $produto)
+    public function update(ProdutoRequest $request, $id)
     {
-        try{
+        try {
+            $produto = Produto::findOrFail($id);
+
             $produtoDTO = new ProdutoDTO(
                 $request->validated()['nome'],
                 $request->validated()['descricao'],
@@ -74,6 +77,10 @@ class ProdutoController extends Controller
             $produto->update((array) $produtoDTO);
             return (new ProdutoResource($produto))->response()->setStatusCode(200);
 
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Produto não encontrado!'
+            ], 404);
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->json([
                 'error' => 'Erro no banco de dados',
@@ -90,14 +97,20 @@ class ProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produto $produto)
+    public function destroy($id)
     {
         try {
+            $produto = Produto::findOrFail($id);
+
             $produto->delete();
             return response()->json([
                 'success' => true,
                 'message' => 'Produto deletado com sucesso'
             ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Produto não encontrado!'
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -106,3 +119,4 @@ class ProdutoController extends Controller
         }
     }
 }
+
