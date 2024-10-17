@@ -58,11 +58,33 @@ class ProdutoController extends Controller
     
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified resource in storage.
      */
-    public function edit(Produto $produto)
+    public function update(ProdutoRequest $request, Produto $produto)
     {
-        //
+        try{
+            $produtoDTO = new ProdutoDTO(
+                $request->validated()['nome'],
+                $request->validated()['descricao'],
+                $request->validated()['preco'],
+                $request->validated()['qtde_estoque'],
+                $request->validated()['status']
+            );
+
+            $produto->update((array) $produtoDTO);
+            return (new ProdutoResource($produto))->response()->setStatusCode(200);
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([
+                'error' => 'Erro no banco de dados',
+                'message' => $e->getMessage()
+            ], 500);
+        } catch(\Exception $e){
+            return response()->json([
+                'error' => 'Erro inesperado',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -70,6 +92,17 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        //
+        try {
+            $produto->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Produto deletado com sucesso'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao deletar o produto'
+            ], 500);
+        }
     }
 }
